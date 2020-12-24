@@ -2,6 +2,7 @@
 //src/Controller/ProgramController.php
 namespace App\Controller;
 
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,5 +22,17 @@ Class   ProgramController extends AbstractController
        return $this->render('program/index.html.twig', [
            'website' => 'Wild Series'
        ]);
+    }
+
+    /**
+     * @return Response
+     * @Route("/{id}", name="show", requirements={"id"="\d+"}, methods={"GET"})
+     * @param $id
+     */
+    public function show($id = 0): Response
+    {
+        return $this->render('program/show.html.twig', [
+            'id' => $id,
+        ]);
     }
 }
