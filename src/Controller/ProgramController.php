@@ -6,11 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-Class ProgramController extends AbstractController
+/**
+ * @return Response
+ * @Route("/programs", name="program_")
+ */
+Class   ProgramController extends AbstractController
 {
     /**
      * @return Response
-     * @Route("/programs", name="program_index")
+     * @Route("/", name="index")
      */
     public function index(): Response
     {
