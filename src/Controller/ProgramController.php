@@ -2,6 +2,7 @@
 //src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Program;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,20 +20,33 @@ Class   ProgramController extends AbstractController
      */
     public function index(): Response
     {
+        $proprams = $this->getDoctrine()
+            ->getRepository(Program::Class)
+            ->findAll();
        return $this->render('program/index.html.twig', [
-           'website' => 'Wild Series'
+           'programs' => $proprams
        ]);
     }
 
     /**
+     * Getting a program by id
      * @return Response
-     * @Route("/{id}", name="show", requirements={"id"="\d+"}, methods={"GET"})
+     * @Route("/show/{id<^[0-9]+$>}", name="show")
      * @param $id
      */
-    public function show($id = 0): Response
+    public function show(int $id): Response
     {
+        $program = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findOneBy(['id' => $id]);
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program found for id ' . $id
+            );
+        }
         return $this->render('program/show.html.twig', [
-            'id' => $id,
+            'program' => $program,
         ]);
+
     }
 }

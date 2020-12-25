@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if programs|length == 0 %}
+        Aucune série trouvée.
+    {% else %}
+        {% for program in programs %}
+            <div class="card" style="width: 18rem;">
+                <img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
+                <div class="card-body">
+                    <a href="{{ path('program_show', {id : program.id}) }}">
+                        <h5 class="card-title">{{ program.title }} / ID: {{ program.id }}</h5>
+                    </a>
+                    <p class="card-text">{{ program.summary }}</p>
+                    <a href="{{ path('app_index') }}" class="btn btn-primary">Alle à la page d'accueil</a>
+                </div>
+            </div>
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}
