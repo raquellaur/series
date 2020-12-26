@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Saison {{ season.number }} de {{ program.title }}</h5>
+            <p class="card-text">{{ season.description }}</p>
+            Liste de Episodes:
+            <ul class="list-group list-group-flush">
+                {% for episode in season.episodes %}
+                    <li class="list-group-item">{{ episode.title }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('program_show', {id: program.id}) }}" class="btn btn-primary">Aller au programa</a>
+        </div>
+    </div>
+{% endblock %}
