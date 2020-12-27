@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <link rel="icon" href="{{ asset('build/images/favicon.ico') }}" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {{ encore_entry_link_tags('app') }}
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-    <header>
-        {% include '_navbar.html.twig' %}
-    </header>
-        {% block body %}{% endblock %}
-        {{ encore_entry_script_tags('app') }}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{ asset('build/images/favicon.ico') }}"/>
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {{ encore_entry_link_tags('app') }}
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<header>
+    {% include '_navbar.html.twig' %}
+</header>
+<div class="container">{% block body %}{% endblock %}</div>
+
+{{ encore_entry_script_tags('app') }}
+{% block javascripts %}{% endblock %}
+</body>
 </html>
