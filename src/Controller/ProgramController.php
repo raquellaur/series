@@ -75,9 +75,10 @@ class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('program_index');
         }
 
@@ -85,6 +86,7 @@ class ProgramController extends AbstractController
             'program' => $program,
             'form' => $form->createView(),
         ]);
+
     }
 
     /**
