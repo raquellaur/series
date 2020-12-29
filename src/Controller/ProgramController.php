@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
- * @return Response
  * @Route("/programs", name="program_")
  */
 class ProgramController extends AbstractController
@@ -69,7 +68,7 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @Route("/{id<^[0-9]+$>}/edit", name="edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Program $program): Response
     {
