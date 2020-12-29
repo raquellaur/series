@@ -6,9 +6,13 @@ use App\Repository\ProgramRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProgramRepository::class)
+ * @Assert\EnableAutoMapping()
+ * @UniqueEntity("title", message="This title is already used.")
  */
 class Program
 {
@@ -21,16 +25,22 @@ class Program
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank (message="Le champ titre ne peut pas être une chaîne vide.")
+     * @Assert\Length(max=255, maxMessage="The title entered is too long, it should not exceed {{ limit }} characters.")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="The summary field cannot be an empty string.")
+     * @Assert\Regex(pattern="/(?![plus belle la vie]).+/i", message="On parle de vraies séries ici")
      */
     private $summary;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(min=3, max=255)
+     * @Assert\NotBlank (message="Please, enter a image.")
      */
     private $poster;
 
@@ -42,22 +52,32 @@ class Program
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Country
+     * @Assert\NotBlank (message="Please choose a country.")
      */
     private $country;
 
     /**
+     * @Assert\NotBlank(message="Please enter a year.")
      * @ORM\Column(type="integer")
      */
     private $year;
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program", orphanRemoval=true)
+     * @Assert\NotBlank(message="Please enter a season.")
      */
     private $seasons;
 
-    public function __construct()
+    /**
+     * @ORM\ManyToMany(targetEntity=Actor::class, mappedBy="programs")
+     */
+    private $actors;
+
+       public function __construct()
     {
         $this->seasons = new ArrayCollection();
+        $this->actors = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,4 +186,33 @@ class Program
 
         return $this;
     }
+
+    /**
+     * @return Collection|Actor[]
+     */
+    public function getActors(): Collection
+    {
+        return $this->actors;
+    }
+
+    public function addActor(Actor $actor): self
+    {
+        if (!$this->actors->contains($actor)) {
+            $this->actors[] = $actor;
+            $actor->addProgram($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActor(Actor $actor): self
+    {
+        if ($this->actors->removeElement($actor)) {
+            $actor->removeProgram($this);
+        }
+
+        return $this;
+    }
+
+
 }

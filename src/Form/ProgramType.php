@@ -21,7 +21,9 @@ class ProgramType extends AbstractType
             ->add('title', TextType::class)
             ->add('summary', TextareaType::class)
             ->add('poster', TextType::class)
-            ->add('country', CountryType::class)
+            ->add('country', CountryType::class, [
+                'placeholder' => 'Choose a country'
+            ])
             ->add('year', ChoiceType::class,[
                 'choices' => $this->getYears(1950)
             ])
