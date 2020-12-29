@@ -26,13 +26,13 @@ class Program
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank (message="Le champ titre ne peut pas être une chaîne vide.")
-     * @Assert\Length(max=255, maxMessage="Le titre saisie {{ value }} est trop longue, elle ne devrait pas dépasser {{ limit }} caractères")
+     * @Assert\Length(max=255, maxMessage="The title entered is too long, it should not exceed {{ limit }} characters.")
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
-     * @Assert\NotBlank(message="Le champ summary ne peut pas être une chaîne vide.")
+     * @Assert\NotBlank(message="The summary field cannot be an empty string.")
      * @Assert\Regex(pattern="/(?![plus belle la vie]).+/i", message="On parle de vraies séries ici")
      */
     private $summary;
@@ -40,7 +40,7 @@ class Program
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(min=3, max=255)
-     * @Assert\NotBlank (message="Please, enter a image")
+     * @Assert\NotBlank (message="Please, enter a image.")
      */
     private $poster;
 
@@ -53,19 +53,19 @@ class Program
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Country
-     * @Assert\NotBlank (message="Please choose a country")
+     * @Assert\NotBlank (message="Please choose a country.")
      */
     private $country;
 
     /**
-     * @Assert\NotBlank(message="Please enter a year")
+     * @Assert\NotBlank(message="Please enter a year.")
      * @ORM\Column(type="integer")
      */
     private $year;
 
     /**
      * @ORM\OneToMany(targetEntity=Season::class, mappedBy="program", orphanRemoval=true)
-     * @Assert\NotBlank(message="Please enter a season")
+     * @Assert\NotBlank(message="Please enter a season.")
      */
     private $seasons;
 
