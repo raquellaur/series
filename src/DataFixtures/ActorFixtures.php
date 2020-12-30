@@ -7,25 +7,21 @@ use App\Entity\Program;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker;
 
 class ActorFixtures extends Fixture implements DependentFixtureInterface
 {
-    const ACTOR = [
-        'Greg Nicotero',
-        'Michael E. Satrazemis',
-        'Ernest R. Dickerson',
-        'David Boyd',
-    ];
     public function load(ObjectManager $manager)
     {
-        foreach (self::ACTOR as $key => $data)
-        {
-          $actor = new Actor();
-          $actor->setName($data);
-          $actor->addProgram($this->getReference('walking'));
-          $manager->persist($actor);
+        $faker  =  Faker\Factory::create('en_US');
 
+        for($i=0; $i < 50; $i++) {
+          $actor = new Actor();
+          $actor->setName($faker->name);
+          $actor->addProgram($this->getReference('program_'.rand(0,5)));
+          $manager->persist($actor);
         }
+        $manager->flush();
     }
 
     public function getDependencies()
