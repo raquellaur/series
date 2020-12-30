@@ -11,7 +11,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=ProgramRepository::class)
- * @Assert\EnableAutoMapping()
  * @UniqueEntity("title", message="This title is already used.")
  */
 class Program
@@ -73,6 +72,9 @@ class Program
      */
     private $actors;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $slug;
 
        public function __construct()

@@ -37,7 +37,6 @@ class EpisodeController extends AbstractController
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($episode->getTitle());
             $episode->setSlug($slug);
