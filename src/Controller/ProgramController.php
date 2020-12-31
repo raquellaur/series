@@ -11,9 +11,11 @@ use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/programs", name="program_")
@@ -35,16 +37,14 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * The controller for the program add form
-     * Display the form or deal with it
-     *
      * @Route("/new", name="new")
      * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @param Slugify $slugify
      * @return Response
+     * @param MailerInterface $mailer
      */
-    public function new(EntityManagerInterface $entityManager, Request $request, Slugify $slugify) : Response
+    public function new(EntityManagerInterface $entityManager, Request $request, Slugify $slugify, MailerInterface $mailer) : Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -55,6 +55,13 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('your_email@example.com')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('program/newProgramEmail.html.twig', ['program' => $program]));
+
+            $mailer->send($email);
             return $this->redirectToRoute('program_index');
         }
         return $this->render('program/new.html.twig', [
