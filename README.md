@@ -1,3 +1,3 @@
 # series
 
-Video quete 16 - https://www.loom.com/share/27907ca98a5942faa8d8b7cb2d45a21d
+Video quete 17 -  https://www.loom.com/share/8290f1e7064a4549a7ae7e32a208236d
