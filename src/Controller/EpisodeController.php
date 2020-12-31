@@ -50,8 +50,8 @@ class EpisodeController extends AbstractController
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to('your_email@example.com')
-                ->subject('Une nouvelle série vient d\'être publiée !')
-                ->html($this->renderView('program/newProgramEmail.html.twig', [
+                ->subject('Un nouvel episode vient d\'être publiée !')
+                ->html($this->renderView('episode/newEpisodeEmail.html.twig', [
                     'episode' => $episode,
                 ]));
 
