@@ -7,10 +7,33 @@
 
             <h6 class="card-subtitle mb-2 text-muted">Episode: {{ episode.number }} - {{ episode.title }}</h6>
             <p class="card-text">{{ episode.synopsis }}</p>
+            {% if app.user %}
+                <h2>Ajouter un commentaire</h2>
+                {% include 'comment/_form.html.twig' %}
+            {% else %}
+                <a href="{{ path('app_login') }}"> Se connecter</a>
+            {% endif %}
+            <h2>Ajouter un commentaire</h2>
+            {% if episode.comments|length > 0 %}
+                {% for comment in episode.comments %}
+                    <div class="card w-50" style="margin-bottom: 10px;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comment.author.email }}</h5>
+                            <p class="card-text">Commentaire: {{ comment.comment }}</p>
+                            <p class="card-text">Note: {{ comment.rate }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <span>Be the first to comment this Episope.</span>
+                </div>
+            {% endif %}
             <a href="{{ path('app_index') }}" class="card-link">
                 Aller à la home
             </a>
-            <a href="{{ path('program_season_show', {programSlug : program.slug, seasonId : season.id}) }}" class="card-link">
+            <a href="{{ path('program_season_show', {programSlug : program.slug, seasonId : season.id}) }}"
+               class="card-link">
                 Retour à la season
             </a>
         </div>

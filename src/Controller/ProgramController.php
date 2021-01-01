@@ -2,11 +2,14 @@
 //src/Controller/ProgramController.php
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramType;
 use App\Service\Slugify;
+use App\Entity\User;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -118,9 +121,12 @@ class ProgramController extends AbstractController
      */
     public function showSeason(Program $program, Season $season): Response
     {
+
         return $this->render('program/season_show.html.twig', [
             'program' => $program,
             'season' => $season,
+
+
         ]);
     }
 
@@ -132,13 +138,35 @@ class ProgramController extends AbstractController
      * @param Season $season
      * @param Episode $episode
      * @param Program $program
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @var User $user
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode)
+    public function showEpisode(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        Program $program,
+        Season $season,
+        Episode $episode)
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            $comment->setAuthor($user);
+            $comment->setEpisode($episode);
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('season_show');
+        }
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
-            'episode' => $episode
+            'episode' => $episode,
+            'form' => $form->createView(),
         ]);
 
     }
