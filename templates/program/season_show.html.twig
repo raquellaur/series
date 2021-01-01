@@ -8,14 +8,14 @@
             Liste de Episodes:
             {% for episode in season.episodes %}
                 <div class="list-group">
-                    <a href="{{ path('program_episode_show', { programId: program.id, seasonId: season.id, episodeId: episode.id}) }}"
+                    <a href="{{ path('program_episode_show', { programSlug: program.slug, seasonId: season.id, episodeSlug: episode.slug}) }}"
                        class="list-group-item list-group-item-action">
                         Episode {{ episode.number}} - {{ episode.title }}
                     </a>
                 </div>
             {% endfor %}
 
-            <a href="{{ path('program_show', {id: program.id}) }}" class="btn btn-primary">Aller au programa</a>
+            <a href="{{ path('program_show', {slug: program.slug}) }}" class="btn btn-primary">Aller au programa</a>
         </div>
     </div>
 {% endblock %}

@@ -10,7 +10,7 @@
                 <h5 class="card-title">{{ loop.index }} / {{ program.title }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ program.category.name }}</h6>
                 <p class="card-text">{{ program.summary }}</p>
-                <a href="{{ path("program_show", { id: program.id }) }}" class="card-link">Voir la fiche</a>
+                <a href="{{ path("program_show", { slug: program.slug }) }}" class="card-link">Voir la fiche</a>
             </div>
         </div>
 

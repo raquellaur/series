@@ -8,7 +8,7 @@
             <div class="card" style="width: 18rem;">
                 <img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
                 <div class="card-body">
-                    <a href="{{ path('program_show', {id : program.id}) }}">
+                    <a href="{{ path('program_show', {slug : program.slug}) }}">
                         <h5 class="card-title">{{ program.title }} / ID: {{ program.id }}</h5>
                     </a>
                     <p class="card-text">{{ program.summary }}</p>
