@@ -160,7 +160,7 @@ class ProgramController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('season_show');
+
         }
         return $this->render('program/episode_show.html.twig', [
             'program' => $program,
