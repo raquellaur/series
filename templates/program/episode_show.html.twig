@@ -21,7 +21,7 @@
                             <h5 class="card-title">{{ comment.author.email }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Note: {{ comment.rate }}</h6>
                             <p class="card-text">Commentaire: {{ comment.comment }}</p>
-                            {% if (app.user == program.owner and is_granted("ROLE_CONTRIBUTOR")) or is_granted("ROLE_ADMIN") %}
+                            {% if app.user and (app.user == comment.author or is_granted("ROLE_ADMIN")) %}
                                 {% include 'program/_deleteComment_form.html.twig' %}
                             {% endif %}
                         </div>
