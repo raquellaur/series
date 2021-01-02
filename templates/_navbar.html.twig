@@ -9,25 +9,37 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('category_index') }}">Categories<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('program_index') }}">Programs<span
+                            class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
                     Categories
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="">Action</a>
+
                 </div>
             </li>
+        </ul>
+        <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
             {% if app.user %}
-                <span class="navbar-text">
-                    {{ app.user.email }}
-                  </span>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
+                    <a class="nav-link my-2 my-sm-0" href="{{ path('app_logout') }}"> Se déconnecter</a>
                 </li>
-              {% else %}
+                <span class="navbar-text mr-sm-3">
+                    {{ app.user.email }}
+                </span>
                 <li class="nav-item">
+                    <a class="nav-link my-2 my-sm-0" href="{{ path('app_account', {id: app.user.id}) }}">My Account</a>
+                </li>
+            {% else %}
+                <li class="nav-item my-2 my-sm-0">
                     <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
                 </li>
             {% endif %}

@@ -5,8 +5,10 @@
 {% block body %}
     <h1>Toutes les series de la table program: </h1>
     {% for program in programs %}
-        <div class="card" style="width: 50rem;">
+        <div class="card" style="width: 20rem;">
+            <img width="100%" class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
             <div class="card-body">
+
                 <h5 class="card-title">{{ loop.index }} / {{ program.title }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Catégorie : {{ program.category.name }}</h6>
                 <p class="card-text">{{ program.summary }}</p>
