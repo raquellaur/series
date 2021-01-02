@@ -3,7 +3,13 @@
 {% block title %}All Programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les series de la table program: </h1>
+    {# place le formulaire de recherche sous le <h1>#}
+    <h1>Toutes les séries</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button>Search</button>
+    {{ form_end(form) }}
+
     {% for program in programs %}
         <div class="card" style="width: 20rem;">
             <img width="100%" class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
