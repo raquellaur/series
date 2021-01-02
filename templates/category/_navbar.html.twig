@@ -1,0 +1,11 @@
+<li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+                Categories
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                {% for c in categoryRepository.findAll() %}
+                    <a class="dropdown-item" href="{{ path('category_show', {categoryName: c.name}) }}">{{ c.name }}</a>
+                {% endfor %}
+        </div>
+</li>
