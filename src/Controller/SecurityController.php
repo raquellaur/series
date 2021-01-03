@@ -73,13 +73,11 @@ class SecurityController extends AbstractController
         ]);
     }
     /**
-     * @Route("/{id}", name="app_account", methods={"GET"})
+     * @Route("/my_profile", name="app_profile")
      */
-    public function showAccount(User $user): Response
+    public function index(): Response
     {
-        return $this->render('user/showProfile.html.twig', [
-            'user' => $user,
-        ]);
+        return $this->render('user/showProfile.html.twig');
     }
 
 }
