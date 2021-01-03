@@ -28,6 +28,16 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Program::class, mappedBy="category")
+     */
+    private $programs;
+
+    public function __construct()
+    {
+        $this->programs = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

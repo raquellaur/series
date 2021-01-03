@@ -82,6 +82,7 @@ class Program
      */
     private $owner;
 
+
        public function __construct()
     {
         $this->seasons = new ArrayCollection();
@@ -245,6 +246,5 @@ class Program
 
         return $this;
     }
-
 
 }
