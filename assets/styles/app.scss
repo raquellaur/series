@@ -19,5 +19,26 @@ $primary: darken(#428bca, 20%);
 }
 .card{
   margin-top: 30px;
-
 }
+.card-columns {
+  display: block;
+  align-items: center;
+}
+.card-columns {
+  @include media-breakpoint-only(xl) {
+    column-count: 4;
+  }
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-text {
+  -webkit-line-clamp: 4;
+}
+.card-text:hover {
+  overflow: visible;
+}
+

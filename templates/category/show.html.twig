@@ -1,22 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    {% if programs|length == 0 %}
-        Aucune série trouvée.
-    {% else %}
-        {% for program in programs %}
-            <div class="card" style="width: 18rem;">
-                <img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
-                <div class="card-body">
-                    <a href="{{ path('program_show', {slug : program.slug}) }}">
-                        <h5 class="card-title">{{ program.title }} / ID: {{ program.id }}</h5>
-                    </a>
-                    <p class="card-text">{{ program.summary }}</p>
-                    <a href="{{ path('app_index') }}" class="btn btn-primary">Alle à la page d'accueil</a>
-                </div>
-            </div>
-        {% endfor %}
+{% block title %}All Programs{% endblock %}
 
+{% block body %}
+    <h1>Series </h1>
+    {% if programs|length == 0 %}
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title"> Aucune série trouvée.</h5>
+            </div>
+        </div>
+    {% else %}
+        <div class="card-columns">
+            {% for program in programs %}
+                <div class="card">
+                    <img width="60px" height="400px" class="card-img-top" src="{{ program.poster }}"
+                         alt="{{ program.title }} poster">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ program.title }}</h5>
+                        <h6 class="card-subtitle mb-2">Catégorie : {{ program.category.name }}</h6>
+                        <p class="card-text text-justify">{{ program.summary }}</p>
+                        <a href="{{ path("program_show", { slug: program.slug }) }}" class="card-link">Voir la fiche</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
 
 {% endblock %}
