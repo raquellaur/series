@@ -32,7 +32,7 @@ class ProgramController extends AbstractController
      * @param Request $request
      * @param ProgramRepository $programRepository
      * @return Response
-     * @Route("/", name="index")
+     * @Route("/", name="index",  methods={"GET","POST"})
      */
     public function index(Request $request, ProgramRepository $programRepository): Response
     {
