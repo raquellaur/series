@@ -12,6 +12,7 @@ use App\Service\Slugify;
 use App\Entity\User;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -56,6 +57,7 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
+            $program->setOwner($this->getUser());
             $entityManager->persist($program);
             $entityManager->flush();
             $email = (new Email())
@@ -93,6 +95,10 @@ class ProgramController extends AbstractController
      */
     public function edit(Request $request, Program $program, Slugify $slugify): Response
     {
+        if(!($this->getUser() == $program->getOwner())){
+
+            throw new AccessDeniedException('Only the owner can edit the program!');
+        }
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 
@@ -169,5 +175,21 @@ class ProgramController extends AbstractController
             'form' => $form->createView(),
         ]);
 
+    }
+    /**
+     * @Route("/{id}", name="delete_comment", methods={"DELETE"})
+     */
+    public function delete(Request $request, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('program_episode_show', [
+            'programSlug' => $comment->getEpisode()->getSeason()->getProgram()->getSlug(),
+            'seasonId' => $comment->getEpisode()->getSeason()->getId(),
+            'episodeSlug' => $comment->getEpisode()->getSlug(),
+        ]);
     }
 }

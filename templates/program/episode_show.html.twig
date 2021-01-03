@@ -7,7 +7,7 @@
 
             <h6 class="card-subtitle mb-2 text-muted">Episode: {{ episode.number }} - {{ episode.title }}</h6>
             <p class="card-text">{{ episode.synopsis }}</p>
-            {% if app.user %}
+            {% if app.user%}
                 <h2>Ajouter un commentaire</h2>
                 {% include 'comment/_form.html.twig' %}
             {% else %}
@@ -16,11 +16,14 @@
             <h2>Ajouter un commentaire</h2>
             {% if episode.comments|length > 0 %}
                 {% for comment in episode.comments %}
-                    <div class="card w-50" style="margin-bottom: 10px;">
+                    <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">{{ comment.author.email }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Note: {{ comment.rate }}</h6>
                             <p class="card-text">Commentaire: {{ comment.comment }}</p>
-                            <p class="card-text">Note: {{ comment.rate }}</p>
+                            {% if app.user and (app.user == comment.author or is_granted("ROLE_ADMIN")) %}
+                                {% include 'program/_deleteComment_form.html.twig' %}
+                            {% endif %}
                         </div>
                     </div>
                 {% endfor %}

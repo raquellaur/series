@@ -6,16 +6,35 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Program;
 use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/categories", name="category_")
  */
 class CategoryController extends AbstractController
 {
+    protected  $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function menuNavbar()
+    {
+        $categories = $this->categoryRepository->findAll();
+
+        return $this->render('category/_navbar.html.twig', [
+            'categories' => $categories,
+        ]);
+    }
+
+
     /**
      * @Route("/", name="index")
      */
@@ -35,8 +54,7 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * The controller for the category add form
-     *
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/new", name="new")
      */
 
