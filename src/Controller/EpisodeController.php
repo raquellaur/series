@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/episode")
@@ -83,6 +85,7 @@ class EpisodeController extends AbstractController
      * @param Request $request
      * @param Episode $episode
      * @param Slugify $slugify
+     * @IsGranted("ROLE_CONTRIBUTOR")
      */
     public function edit(Request $request, Episode $episode, Slugify $slugify): Response
     {
@@ -105,6 +108,7 @@ class EpisodeController extends AbstractController
 
     /**
      * @Route("/{slug}", name="episode_delete", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, Episode $episode): Response
     {

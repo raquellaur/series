@@ -160,13 +160,14 @@ class ProgramController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @var User $user
+     * @return Response
      */
     public function showEpisode(
         Request $request,
         EntityManagerInterface $entityManager,
         Program $program,
         Season $season,
-        Episode $episode)
+        Episode $episode) : Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -178,7 +179,6 @@ class ProgramController extends AbstractController
             $comment->setEpisode($episode);
             $entityManager->persist($comment);
             $entityManager->flush();
-
 
         }
         return $this->render('program/episode_show.html.twig', [
