@@ -15,7 +15,11 @@
 
             <p>Catégorie : {{ program.category.name }}</p>
 
+            <a href="{{ path('program_watchlist', {id:program.id})}}">
 
+                <i class="{{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart"></i>
+
+            </a>
             {% for season in seasons %}
                 <div class="list-group">
                     <a href="{{ path('program_season_show', { programSlug: program.slug, seasonId: season.id}) }}"

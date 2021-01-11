@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="{{ asset('build/images/favicon.ico') }}"/>
+    <script src="https://kit.fontawesome.com/8a63b2128c.js" crossorigin="anonymous"></script>
     <title>{% block title %}Welcome!{% endblock %}</title>
     {{ encore_entry_link_tags('app') }}
     {% block stylesheets %}{% endblock %}
@@ -18,6 +19,7 @@
         </div>
     {% endfor %}
 {% endfor %}
+
 <div class="container">
     {% block body %}
 

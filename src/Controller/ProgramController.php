@@ -1,5 +1,5 @@
 <?php
-//src/Controller/ProgramController.php
+
 namespace App\Controller;
 
 use App\Entity\Comment;
@@ -12,16 +12,16 @@ use App\Form\SearchProgramFormType;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
 use App\Entity\User;
-use phpDocumentor\Reflection\Types\Integer;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/programs", name="program_")
@@ -205,5 +205,22 @@ class ProgramController extends AbstractController
             'seasonId' => $comment->getEpisode()->getSeason()->getId(),
             'episodeSlug' => $comment->getEpisode()->getSlug(),
         ]);
+    }
+
+    /**
+     * @Route("/{id}/watchlist", name="watchlist", methods={"GET","POST"})
+     * @param Program $program
+     * @param EntityManager $entityManager
+     */
+    public function addToWatchlist(Program $program, EntityManager $entityManager){
+
+        $this->getUser()->addProgram($program);
+        $this->getUser()->$entityManager->persist($program);
+        $this->getUser()->$entityManager->flush();
+        return $this->redirectToRoute('program_show', [
+            'slug' => $program->getSlug()
+        ]);
+
+
     }
 }
