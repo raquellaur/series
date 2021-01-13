@@ -240,15 +240,15 @@ class User implements UserInterface
     }
 
     /**
-     * @param Program $program
+     * @param Program $watchlist
      * @return bool
      */
     public function isInWatchlist(Program $program) : bool
     {
         if ($this->watchlist->contains($program)) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
 
     }
 }
